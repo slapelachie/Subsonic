@@ -1,4 +1,4 @@
-package github.daneren2005.dsub.util.compat;
+package xyz.slapelachie.supersonic.util.compat;
 
 import android.content.Context;
 import android.support.v7.media.MediaRouter;
@@ -11,10 +11,10 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.security.ProviderInstaller;
 import static com.google.android.gms.cast.CastMediaControlIntent.DEFAULT_MEDIA_RECEIVER_APPLICATION_ID;
 
-import github.daneren2005.dsub.service.ChromeCastController;
-import github.daneren2005.dsub.service.DownloadService;
-import github.daneren2005.dsub.service.RemoteController;
-import github.daneren2005.dsub.util.EnvironmentVariables;
+import xyz.slapelachie.supersonic.service.ChromeCastController;
+import xyz.slapelachie.supersonic.service.DownloadService;
+import xyz.slapelachie.supersonic.service.RemoteController;
+import xyz.slapelachie.supersonic.util.EnvironmentVariables;
 
 public final class GoogleCompat {
 

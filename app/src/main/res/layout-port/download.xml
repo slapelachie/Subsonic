@@ -32,7 +32,7 @@
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content">
 
-						<github.daneren2005.dsub.view.RecyclingImageView
+						<xyz.slapelachie.supersonic.view.RecyclingImageView
 							android:id="@+id/download_album_art_image"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -48,6 +48,11 @@
 							android:visibility="invisible"
 							android:gravity="center"
 							android:orientation="horizontal">
+
+								<ImageButton
+									android:id="@+id/download_rating_good"
+									style="@style/DownloadActionImageButton"
+									android:src="@drawable/ic_action_rating_good_dark"/>
 
 								<ImageButton
 									android:id="@+id/download_rating_bad"
@@ -70,9 +75,9 @@
 									android:src="@drawable/ic_menu_bookmark_dark"/>
 
 								<ImageButton
-									android:id="@+id/download_rating_good"
+									android:id="@+id/download_toggle_list"
 									style="@style/DownloadActionImageButton"
-									android:src="@drawable/ic_action_rating_good_dark"/>
+									android:src="@drawable/action_toggle_list_dark"/>
 						</LinearLayout>
 					</FrameLayout>
 				</FrameLayout>

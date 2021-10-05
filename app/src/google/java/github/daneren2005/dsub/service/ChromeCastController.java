@@ -13,7 +13,7 @@
 	Copyright 2014 (C) Scott Jackson
 */
 
-package github.daneren2005.dsub.service;
+package xyz.slapelachie.supersonic.service;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -37,19 +37,19 @@ import com.google.android.gms.common.images.WebImage;
 import java.io.File;
 import java.io.IOException;
 
-import github.daneren2005.dsub.R;
-import github.daneren2005.dsub.domain.MusicDirectory;
-import github.daneren2005.dsub.domain.PlayerState;
-import github.daneren2005.dsub.domain.RemoteControlState;
-import github.daneren2005.dsub.util.Constants;
-import github.daneren2005.dsub.util.EnvironmentVariables;
-import github.daneren2005.dsub.util.FileUtil;
-import github.daneren2005.dsub.util.Util;
+import xyz.slapelachie.supersonic.R;
+import xyz.slapelachie.supersonic.domain.MusicDirectory;
+import xyz.slapelachie.supersonic.domain.PlayerState;
+import xyz.slapelachie.supersonic.domain.RemoteControlState;
+import xyz.slapelachie.supersonic.util.Constants;
+import xyz.slapelachie.supersonic.util.EnvironmentVariables;
+import xyz.slapelachie.supersonic.util.FileUtil;
+import xyz.slapelachie.supersonic.util.Util;
 import github.daneren2005.serverproxy.FileProxy;
 import github.daneren2005.serverproxy.ServerProxy;
 import github.daneren2005.serverproxy.WebProxy;
 
-import static github.daneren2005.dsub.util.compat.GoogleCompat.castApplicationId;
+import static xyz.slapelachie.supersonic.util.compat.GoogleCompat.castApplicationId;
 
 /**
  * Created by owner on 2/9/14.

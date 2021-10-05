@@ -63,7 +63,7 @@
 			android:defaultValue="2000"
 			android:digits="0123456789"/>
 
-		<github.daneren2005.dsub.view.CacheLocationPreference
+		<xyz.slapelachie.supersonic.view.CacheLocationPreference
 			android:title="@string/settings.cache_location"
 			android:key="cacheLocation"/>
 

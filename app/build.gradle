@@ -4,16 +4,16 @@ android {
 	compileSdkVersion 30
 
 	defaultConfig {
-		applicationId "github.daneren2005.dsub"
+		applicationId "xyz.slapelachie.supersonic"
 		minSdkVersion 15
 		targetSdkVersion 29
 		versionCode 207
 		versionName '5.5.2'
-		setProperty("archivesBaseName", "DSub $versionName")
+		setProperty("archivesBaseName", "Supersonic $versionName")
 		resConfigs "de", "es", "fr", "hu", "nl", "pt-rPT", "ru", "sv", "zh"
 		vectorDrawables.useSupportLibrary = true
 		resValue 'string', 'account_type.subsonic', applicationId + ".subsonic"
-		resValue 'string', 'provider.search', applicationId + ".provider.DSubSearchProvider"
+		resValue 'string', 'provider.search', applicationId + ".provider.DsubSearchProvider"
 		resValue 'string', 'provider.playlist', applicationId + ".playlists.provider"
 		resValue 'string', 'provider.podcast', applicationId + ".podcasts.provider"
 		resValue 'string', 'provider.starred', applicationId + ".starred.provider"
