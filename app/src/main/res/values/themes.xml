@@ -2,8 +2,8 @@
 <resources>
 	<style name="Theme.DSub.Light.Base" parent="@style/Theme.AppCompat.Light.DarkActionBar">
 		<item name="offline_icon">@drawable/main_offline_light</item>
-		<item name="media_button_backward">@drawable/media_backward_light</item>
-		<item name="media_button_forward">@drawable/media_forward_light</item>
+		<item name="media_button_backward">@drawable/ic_baseline_keyboard_arrow_left_24</item>
+		<item name="media_button_forward">@drawable/ic_baseline_keyboard_arrow_right_24</item>
 		<item name="media_button_rewind">@drawable/media_rewind_light</item>
 		<item name="media_button_fastforward">@drawable/media_fastforward_light</item>
 		<item name="media_button_pause">@drawable/media_pause_light</item>

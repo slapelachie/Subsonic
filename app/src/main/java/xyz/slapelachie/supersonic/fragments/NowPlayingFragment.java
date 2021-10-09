@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.graphics.PorterDuff;
 import android.support.v7.app.AlertDialog;
@@ -106,6 +107,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 	private TextView positionTextView;
 	private TextView durationTextView;
 	private TextView statusTextView;
+	private TextView downloadPositionIndex;
 	private SeekBar progressBar;
 	private AutoRepeatButton previousButton;
 	private AutoRepeatButton nextButton;
@@ -192,6 +194,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 		rateGoodButton = (ImageButton) rootView.findViewById(R.id.download_rating_good);
 		playbackSpeedButton = (ImageButton) rootView.findViewById(R.id.download_playback_speed);
 		toggleListButton =rootView.findViewById(R.id.download_toggle_list);
+		downloadPositionIndex = (TextView) rootView.findViewById(R.id.download_position_index);
 
 		playlistView = (RecyclerView)rootView.findViewById(R.id.download_list);
 		FastScroller fastScroller = (FastScroller) rootView.findViewById(R.id.download_fast_scroller);
@@ -1296,10 +1299,13 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 			} else {
 				setSubtitle(context.getResources().getString(R.string.download_playing_out_of, currentPlayingIndex + 1, currentPlayingSize));
 			}
+
+			downloadPositionIndex.setText(String.format("%d/%d", currentPlayingIndex+1, currentPlayingSize));
 		} else {
 			songTitleTextView.setText(null);
 			getImageLoader().loadImage(albumArtImageView, (Entry) null, true, false);
 			setSubtitle(null);
+			downloadPositionIndex.setText("-/-");
 		}
 	}
 
