@@ -35,10 +35,10 @@
 			android:entries="@array/disconnectPauseNames"/>
 
 		<CheckBoxPreference
-			android:title="@string/settings.persistent_title"
-			android:summary="@string/settings.persistent_summary"
+			android:defaultValue="true"
 			android:key="persistentNotification"
-			android:defaultValue="false"/>
+			android:summary="@string/settings.persistent_summary"
+			android:title="@string/settings.persistent_title" />
 
 		<CheckBoxPreference
 			android:title="@string/settings.heads_up_notification"

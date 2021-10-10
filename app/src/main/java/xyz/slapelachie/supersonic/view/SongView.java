@@ -19,7 +19,13 @@
 package xyz.slapelachie.supersonic.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.RequiresApi;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -34,6 +40,7 @@ import xyz.slapelachie.supersonic.util.ThemeUtil;
 import xyz.slapelachie.supersonic.util.Util;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * Used to display songs in a {@code ListView}.
@@ -53,6 +60,7 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 	private ImageView bookmarkButton;
 	private ImageView playedButton;
 	private View bottomRowView;
+	private ImageView statusDownloadView;
 
 	private DownloadService downloadService;
 	private long revision = -1;
@@ -73,10 +81,13 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 	private boolean isPlayed = false;
 	private boolean isPlayedShown = false;
 	private boolean showAlbum = false;
+	private boolean isQueue;
 
-	public SongView(Context context) {
+	public SongView(Context context, boolean isQueue) {
 		super(context);
 		LayoutInflater.from(context).inflate(R.layout.song_list_item, this, true);
+
+		this.isQueue = isQueue;
 
 		trackTextView = (TextView) findViewById(R.id.song_track);
 		titleTextView = (TextView) findViewById(R.id.song_title);
@@ -92,6 +103,7 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		playedButton = (ImageButton) findViewById(R.id.song_played);
 		moreButton = (ImageView) findViewById(R.id.item_more);
 		bottomRowView = findViewById(R.id.song_bottom);
+		statusDownloadView = (ImageView) findViewById(R.id.song_status_download);
 	}
 
 	public void setObjectImpl(MusicDirectory.Entry song, Boolean checkable) {
@@ -155,7 +167,7 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 			track = song.getCustomOrder();
 		}
 		TextView newPlayingTextView;
-		if(track != null && Util.getDisplayTrack(context)) {
+		if(track != null && Util.getDisplayTrack(context) && !isQueue) {
 			trackTextView.setText(String.format("%02d", track));
 			trackTextView.setVisibility(View.VISIBLE);
 			newPlayingTextView = trackTextView;
@@ -192,6 +204,13 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 
 	public DownloadFile getDownloadFile() {
 		return downloadFile;
+	}
+
+	private int getTextColor(Context context, int attrId) {
+		TypedArray typedArray = context.getTheme().obtainStyledAttributes(new int[] { attrId });
+		int textColor = typedArray.getColor(0, 0);
+		typedArray.recycle();
+		return textColor;
 	}
 
 	@Override
@@ -255,12 +274,12 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		if (isWorkDone) {
 			int moreImage = isSaved ? R.drawable.download_pinned : R.drawable.download_cached;
 			if(moreImage != this.moreImage) {
-				moreButton.setImageResource(moreImage);
+				statusDownloadView.setImageResource(moreImage);
 				this.moreImage = moreImage;
 			}
-		} else if(this.moreImage != R.drawable.download_none_light) {
-			moreButton.setImageResource(DrawableTint.getDrawableRes(context, R.attr.download_none));
-			this.moreImage = R.drawable.download_none_light;
+		} else if(this.moreImage != 0) {
+			statusDownloadView.setImageResource(0);
+			this.moreImage = 0;
 		}
 
 		if (downloadFile.isDownloading() && !downloadFile.isDownloadCancelled() && partialFileExists) {
@@ -278,15 +297,25 @@ public class SongView extends UpdateView2<MusicDirectory.Entry, Boolean> {
 		}
 
 		boolean playing = Util.equals(downloadService.getCurrentPlaying(), downloadFile);
+		int textColor = getTextColor(context, android.R.attr.textColorPrimary);
+		int textColorSecondary = getTextColor(context, android.R.attr.textColorSecondary);
+
 		if (playing) {
 			if(!this.playing) {
 				this.playing = playing;
-				playingTextView.setCompoundDrawablesWithIntrinsicBounds(DrawableTint.getDrawableRes(context, R.attr.playing), 0, 0, 0);
+			    for (TextView textView : Arrays.asList(titleTextView, trackTextView)) {
+					textView.setTextColor(textColor);
+					textView.setTypeface(null, Typeface.BOLD);
+				}
 			}
 		} else {
 			if(this.playing) {
 				this.playing = playing;
-				playingTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+				titleTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+				for (TextView textView : Arrays.asList(titleTextView, trackTextView)) {
+					textView.setTextColor(textColorSecondary);
+					textView.setTypeface(null, Typeface.NORMAL);
+				}
 			}
 		}
 

@@ -24,13 +24,13 @@
         android:layout_height="0dip"
         android:layout_weight="1.0">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/download_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:scrollbars="vertical"
+            android:layout_marginRight="@dimen/FastScroller.NormalBarMargin"
             android:paddingRight="@dimen/FastScroller.LeftAlignedMargin"
-            android:layout_marginRight="@dimen/FastScroller.NormalBarMargin"/>
+            android:scrollbars="vertical" />
 
         <xyz.slapelachie.supersonic.view.FastScroller
             android:id="@+id/download_fast_scroller"

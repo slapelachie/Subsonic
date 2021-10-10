@@ -41,7 +41,7 @@ public class DownloadFileAdapter extends SectionAdapter<DownloadFile> implements
 
 	@Override
 	public UpdateView.UpdateViewHolder onCreateSectionViewHolder(ViewGroup parent, int viewType) {
-		return new UpdateView.UpdateViewHolder(new SongView(context));
+		return new UpdateView.UpdateViewHolder(new SongView(context, true));
 	}
 
 	@Override

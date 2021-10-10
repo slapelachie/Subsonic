@@ -16,7 +16,7 @@
 package xyz.slapelachie.supersonic.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.PopupMenu;
+import androidx.appcompat.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -118,7 +118,7 @@ public class ArtistAdapter extends SectionAdapter<Serializable> implements FastS
 		if(viewType == VIEW_TYPE_ARTIST) {
 			updateView = new ArtistView(context);
 		} else if(viewType == VIEW_TYPE_SONG) {
-			updateView = new SongView(context);
+			updateView = new SongView(context, false);
 		}
 
 		return new UpdateView.UpdateViewHolder(updateView);

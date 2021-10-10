@@ -60,7 +60,7 @@ public class PodcastChannelAdapter extends ExpandableSectionAdapter<Serializable
 	public UpdateView.UpdateViewHolder onCreateSectionViewHolder(ViewGroup parent, int viewType) {
 		UpdateView updateView;
 		if(viewType == VIEW_TYPE_PODCAST_EPISODE) {
-			updateView = new SongView(context);
+			updateView = new SongView(context, false);
 		} else if(viewType == VIEW_TYPE_PODCAST_LEGACY) {
 			updateView = new PodcastChannelView(context);
 		} else {

@@ -17,7 +17,7 @@
  
 package xyz.slapelachie.supersonic.util.tags;
 
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache;
 import java.util.HashMap;
 import java.util.Vector;
 

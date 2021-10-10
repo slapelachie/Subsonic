@@ -2,8 +2,8 @@ package xyz.slapelachie.supersonic.view.compat;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.MediaRouteControllerDialog;
-import android.support.v7.app.MediaRouteControllerDialogFragment;
+import androidx.mediarouter.app.MediaRouteControllerDialog;
+import androidx.mediarouter.app.MediaRouteControllerDialogFragment;
 
 import xyz.slapelachie.supersonic.util.ThemeUtil;
 

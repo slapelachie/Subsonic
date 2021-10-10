@@ -73,7 +73,7 @@ public class EntryGridAdapter extends SectionAdapter<Entry> {
 		if(viewType == VIEW_TYPE_ALBUM_LINE || viewType == VIEW_TYPE_ALBUM_CELL) {
 			updateView = new AlbumView(context, viewType == VIEW_TYPE_ALBUM_CELL);
 		} else if(viewType == VIEW_TYPE_SONG) {
-			updateView = new SongView(context);
+			updateView = new SongView(context, false);
 		}
 
 		return new UpdateViewHolder(updateView);

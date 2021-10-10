@@ -1,7 +1,7 @@
 package xyz.slapelachie.supersonic.util.compat;
 
 import android.content.Context;
-import android.support.v7.media.MediaRouter;
+import androidx.mediarouter.media.MediaRouter;
 
 import xyz.slapelachie.supersonic.service.DownloadService;
 import xyz.slapelachie.supersonic.service.RemoteController;

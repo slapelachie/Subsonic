@@ -83,7 +83,7 @@ public class SearchAdapter extends ExpandableSectionAdapter<Serializable> {
 		if(viewType == VIEW_TYPE_ALBUM_CELL || viewType == VIEW_TYPE_ALBUM_LINE) {
 			updateView = new AlbumView(context, viewType == VIEW_TYPE_ALBUM_CELL);
 		} else if(viewType == VIEW_TYPE_SONG) {
-			updateView = new SongView(context);
+			updateView = new SongView(context, false);
 		} else if(viewType == VIEW_TYPE_ARTIST) {
 			updateView = new ArtistView(context);
 		}
