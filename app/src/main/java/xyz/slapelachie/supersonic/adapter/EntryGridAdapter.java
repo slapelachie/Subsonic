@@ -35,130 +35,137 @@ import xyz.slapelachie.supersonic.view.UpdateView;
 import xyz.slapelachie.supersonic.view.UpdateView.UpdateViewHolder;
 
 public class EntryGridAdapter extends SectionAdapter<Entry> {
-	private static String TAG = EntryGridAdapter.class.getSimpleName();
+    private static String TAG = EntryGridAdapter.class.getSimpleName();
 
-	public static int VIEW_TYPE_ALBUM_CELL = 1;
-	public static int VIEW_TYPE_ALBUM_LINE = 2;
-	public static int VIEW_TYPE_SONG = 3;
+    public static int VIEW_TYPE_ALBUM_CELL = 1;
+    public static int VIEW_TYPE_ALBUM_LINE = 2;
+    public static int VIEW_TYPE_SONG = 3;
 
-	private ImageLoader imageLoader;
-	private boolean largeAlbums;
-	private boolean showArtist = false;
-	private boolean showAlbum = false;
-	private boolean removeFromPlaylist = false;
-	private View header;
+    private ImageLoader imageLoader;
+    private boolean largeAlbums;
+    private boolean showArtist = false;
+    private boolean showAlbum = false;
+    private boolean removeFromPlaylist = false;
+    private boolean isPlaylist = false;
+    private View header;
 
-	public EntryGridAdapter(Context context, List<Entry> entries, ImageLoader imageLoader, boolean largeCell) {
-		super(context, entries);
-		this.imageLoader = imageLoader;
-		this.largeAlbums = largeCell;
+    public EntryGridAdapter(Context context, List<Entry> entries, ImageLoader imageLoader, boolean largeCell) {
+        super(context, entries);
+        this.imageLoader = imageLoader;
+        this.largeAlbums = largeCell;
 
-		// Always show artist if they aren't all the same
-		String artist = null;
-		for(MusicDirectory.Entry entry: entries) {
-			if(artist == null) {
-				artist = entry.getArtist();
-			}
+        // Always show artist if they aren't all the same
+        String artist = null;
+        for (MusicDirectory.Entry entry : entries) {
+            if (artist == null) {
+                artist = entry.getArtist();
+            }
 
-			if(artist != null && !artist.equals(entry.getArtist())) {
-				showArtist = true;
-			}
-		}
-		checkable = true;
-	}
+            if (artist != null && !artist.equals(entry.getArtist())) {
+                showArtist = true;
+            }
+        }
+        checkable = true;
+    }
 
-	@Override
-	public UpdateViewHolder onCreateSectionViewHolder(ViewGroup parent, int viewType) {
-		UpdateView updateView = null;
-		if(viewType == VIEW_TYPE_ALBUM_LINE || viewType == VIEW_TYPE_ALBUM_CELL) {
-			updateView = new AlbumView(context, viewType == VIEW_TYPE_ALBUM_CELL);
-		} else if(viewType == VIEW_TYPE_SONG) {
-			updateView = new SongView(context, false);
-		}
+    @Override
+    public UpdateViewHolder onCreateSectionViewHolder(ViewGroup parent, int viewType) {
+        UpdateView updateView = null;
+        if (viewType == VIEW_TYPE_ALBUM_LINE || viewType == VIEW_TYPE_ALBUM_CELL) {
+            updateView = new AlbumView(context, viewType == VIEW_TYPE_ALBUM_CELL);
+        } else if (viewType == VIEW_TYPE_SONG) {
+            updateView = new SongView(context, isPlaylist);
+        }
 
-		return new UpdateViewHolder(updateView);
-	}
+        return new UpdateViewHolder(updateView);
+    }
 
-	@Override
-	public void onBindViewHolder(UpdateViewHolder holder, Entry entry, int viewType) {
-		UpdateView view = holder.getUpdateView();
-		if(viewType == VIEW_TYPE_ALBUM_CELL || viewType == VIEW_TYPE_ALBUM_LINE) {
-			AlbumView albumView = (AlbumView) view;
-			albumView.setShowArtist(showArtist);
-			albumView.setObject(entry, imageLoader);
-		} else if(viewType == VIEW_TYPE_SONG) {
-			SongView songView = (SongView) view;
-			songView.setShowAlbum(showAlbum);
-			songView.setObject(entry, checkable && !entry.isVideo());
-		}
-	}
+    @Override
+    public void onBindViewHolder(UpdateViewHolder holder, Entry entry, int viewType) {
+        UpdateView view = holder.getUpdateView();
+        if (viewType == VIEW_TYPE_ALBUM_CELL || viewType == VIEW_TYPE_ALBUM_LINE) {
+            AlbumView albumView = (AlbumView) view;
+            albumView.setShowArtist(showArtist);
+            albumView.setObject(entry, imageLoader);
+        } else if (viewType == VIEW_TYPE_SONG) {
+            SongView songView = (SongView) view;
+            songView.setShowAlbum(showAlbum);
+            songView.setObject(entry, checkable && !entry.isVideo());
+        }
+    }
 
-	public UpdateViewHolder onCreateHeaderHolder(ViewGroup parent) {
-		return new UpdateViewHolder(header, false);
-	}
-	public void onBindHeaderHolder(UpdateViewHolder holder, String header, int sectionIndex) {
+    public void setIsPlaylist(boolean isPlaylist) {
+        this.isPlaylist = isPlaylist;
+    }
 
-	}
+    public UpdateViewHolder onCreateHeaderHolder(ViewGroup parent) {
+        return new UpdateViewHolder(header, false);
+    }
 
-	@Override
-	public int getItemViewType(Entry entry) {
-		if(entry.isDirectory()) {
-			if (largeAlbums) {
-				return VIEW_TYPE_ALBUM_CELL;
-			} else {
-				return VIEW_TYPE_ALBUM_LINE;
-			}
-		} else {
-			return VIEW_TYPE_SONG;
-		}
-	}
+    public void onBindHeaderHolder(UpdateViewHolder holder, String header, int sectionIndex) {
 
-	public void setHeader(View header) {
-		this.header = header;
-		this.singleSectionHeader = true;
-	}
-	public View getHeader() {
-		return header;
-	}
+    }
 
-	public void setShowArtist(boolean showArtist) {
-		this.showArtist = showArtist;
-	}
+    @Override
+    public int getItemViewType(Entry entry) {
+        if (entry.isDirectory()) {
+            if (largeAlbums) {
+                return VIEW_TYPE_ALBUM_CELL;
+            } else {
+                return VIEW_TYPE_ALBUM_LINE;
+            }
+        } else {
+            return VIEW_TYPE_SONG;
+        }
+    }
 
-	public void setShowAlbum(boolean showAlbum) {
-		this.showAlbum = showAlbum;
-	}
+    public void setHeader(View header) {
+        this.header = header;
+        this.singleSectionHeader = true;
+    }
 
-	public void removeAt(int index) {
-		sections.get(0).remove(index);
-		if(header != null) {
-			index++;
-		}
-		notifyItemRemoved(index);
-	}
+    public View getHeader() {
+        return header;
+    }
 
-	public void setRemoveFromPlaylist(boolean removeFromPlaylist) {
-		this.removeFromPlaylist = removeFromPlaylist;
-	}
+    public void setShowArtist(boolean showArtist) {
+        this.showArtist = showArtist;
+    }
 
-	@Override
-	public void onCreateActionModeMenu(Menu menu, MenuInflater menuInflater) {
-		if(Util.isOffline(context)) {
-			menuInflater.inflate(R.menu.multiselect_media_offline, menu);
-		} else {
-			menuInflater.inflate(R.menu.multiselect_media, menu);
-		}
+    public void setShowAlbum(boolean showAlbum) {
+        this.showAlbum = showAlbum;
+    }
 
-		if(!removeFromPlaylist) {
-			menu.removeItem(R.id.menu_remove_playlist);
-		}
+    public void removeAt(int index) {
+        sections.get(0).remove(index);
+        if (header != null) {
+            index++;
+        }
+        notifyItemRemoved(index);
+    }
 
-		if(!selected.isEmpty()) {
-			MenuItem starItem = menu.findItem(R.id.menu_star);
-			if(starItem != null) {
-				boolean isStarred = selected.get(0).isStarred();
-				starItem.setTitle(isStarred ? R.string.common_unstar : R.string.common_star);
-			}
-		}
-	}
+    public void setRemoveFromPlaylist(boolean removeFromPlaylist) {
+        this.removeFromPlaylist = removeFromPlaylist;
+    }
+
+    @Override
+    public void onCreateActionModeMenu(Menu menu, MenuInflater menuInflater) {
+        if (Util.isOffline(context)) {
+            menuInflater.inflate(R.menu.multiselect_media_offline, menu);
+        } else {
+            menuInflater.inflate(R.menu.multiselect_media, menu);
+        }
+
+        if (!removeFromPlaylist) {
+            menu.removeItem(R.id.menu_remove_playlist);
+        }
+
+        if (!selected.isEmpty()) {
+            MenuItem starItem = menu.findItem(R.id.menu_star);
+            if (starItem != null) {
+                boolean isStarred = selected.get(0).isStarred();
+                starItem.setTitle(isStarred ? R.string.common_unstar : R.string.common_star);
+            }
+        }
+    }
 }

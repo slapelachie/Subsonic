@@ -42,7 +42,7 @@ public class BookmarkAdapter extends SectionAdapter<MusicDirectory.Entry> {
 
 	@Override
 	public UpdateView.UpdateViewHolder onCreateSectionViewHolder(ViewGroup parent, int viewType) {
-		return new UpdateView.UpdateViewHolder(new SongView(context, false));
+		return new UpdateView.UpdateViewHolder(new SongView(context, true));
 	}
 
 	@Override

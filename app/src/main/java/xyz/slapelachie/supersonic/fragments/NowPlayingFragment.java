@@ -24,7 +24,9 @@ import java.util.concurrent.TimeUnit;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.graphics.PorterDuff;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,11 +34,13 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.core.view.MenuItemCompat;
 import androidx.mediarouter.app.MediaRouteButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -205,14 +209,17 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
                 return gestureScanner.onTouchEvent(me);
             }
         };
+
         emptyTextView.setOnTouchListener(touchListener);
+
         albumArtImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent me) {
                 if (me.getAction() == MotionEvent.ACTION_DOWN) {
                     lastY = (int) me.getRawY();
+                    System.out.println(lastY);
                 }
-                return gestureScanner.onTouchEvent(me);
+                return !gestureScanner.onTouchEvent(me);
             }
         });
 
@@ -314,7 +321,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
                 }.execute();
             }
         });
-
 
 
         toggleListButton.setOnClickListener(new View.OnClickListener() {
@@ -675,6 +681,7 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
                 updateTitle();
             }
         });
+
     }
 
     @Override
@@ -863,11 +870,19 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         }
     }
 
+    public boolean shouldHideNowPlaying() {
+        return playlistFlipper.getDisplayedChild() == 1;
+    }
+
+    public void hideNowPlaying() {
+        playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.push_down_in));
+        playlistFlipper.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.push_down_out));
+        playlistFlipper.setDisplayedChild(0);
+    }
+
     private void toggleFullscreenAlbumArt() {
         if (playlistFlipper.getDisplayedChild() == 1) {
-            playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.push_down_in));
-            playlistFlipper.setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.push_down_out));
-            playlistFlipper.setDisplayedChild(0);
+            hideNowPlaying();
         } else {
             scrollToCurrent();
             playlistFlipper.setInAnimation(AnimationUtils.loadAnimation(context, R.anim.push_up_in));

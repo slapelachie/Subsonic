@@ -687,8 +687,10 @@ public class SelectDirectoryFragment extends SubsonicFragment implements Section
 			recyclerView.setVisibility(View.VISIBLE);
 		}
 
+
 		if(albumListType == null || "starred".equals(albumListType)) {
 			entryGridAdapter = new EntryGridAdapter(context, entries, getImageLoader(), largeAlbums);
+			entryGridAdapter.setIsPlaylist(playlistId != null);
 			entryGridAdapter.setRemoveFromPlaylist(playlistId != null);
 		} else {
 			if("alphabeticalByName".equals(albumListType)) {

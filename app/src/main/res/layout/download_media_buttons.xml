@@ -18,7 +18,7 @@
 
 
     <ImageButton
-        android:id="@id/download_previous"
+        android:id="@+id/download_previous"
         style="@style/PlaybackControl"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -37,7 +37,7 @@
         android:src="?attr/media_button_start" />
 
     <ImageButton
-        android:id="@id/download_next"
+        android:id="@+id/download_next"
         style="@style/PlaybackControl"
         android:layout_width="0dp"
         android:layout_weight="1"

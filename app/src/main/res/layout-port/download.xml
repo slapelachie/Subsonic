@@ -23,26 +23,38 @@
                 android:background="@android:color/transparent"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="12">
+                    android:layout_weight="10">
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+
+                        app:cardCornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintHeight_default="percent"
+
+                        app:layout_constraintHeight_percent=".9"
+                        app:layout_constraintLeft_toLeftOf="parent"
+
+                        app:layout_constraintRight_toRightOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <xyz.slapelachie.supersonic.view.RecyclingImageView
                             android:id="@+id/download_album_art_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitCenter"
+                            android:src="?attr/unknownAlbum" />
+
+                    </androidx.cardview.widget.CardView>
 
 
-                    </FrameLayout>
-                </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -98,37 +110,37 @@
                         android:id="@+id/download_toggle_list2"
                         style="@style/PlaybackControl"
                         android:layout_width="0dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="start|center_vertical"
                         android:layout_weight="1"
-                        android:layout_height="40dp"
                         android:src="?attr/media_button_temp" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/download_position_index"
                         style="?attr/actionbarSubtitleStyle"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
-                        android:gravity="center"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:textColor="?android:textColorSecondary"
                         android:textStyle="bold" />
 
                     <Space
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <ImageButton
                         android:id="@+id/download_toggle_list"
                         style="@style/PlaybackControl"
                         android:layout_width="0dp"
-                        android:layout_gravity="end|center_vertical"
                         android:layout_height="40dp"
+                        android:layout_gravity="end|center_vertical"
                         android:layout_weight="1"
                         android:src="@drawable/action_toggle_list_dark" />
 

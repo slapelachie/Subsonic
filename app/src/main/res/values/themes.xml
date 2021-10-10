@@ -72,6 +72,7 @@
 		<item name="actionModeBackground">?attr/colorPrimary</item>
 		<item name="cardBackgroundDrawable">@drawable/card_rounded_corners_light</item>
 		<item name="drawerHeaderBackground">@drawable/drawer_header_light</item>
+		<item name="unknownAlbum">@drawable/ic_album</item>
 	</style>
 	<style name="Theme.DSub.Dark.Base" parent="@style/Theme.AppCompat">
 		<item name="offline_icon">@drawable/main_offline_dark</item>
