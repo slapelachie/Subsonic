@@ -119,11 +119,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
     private ImageButton repeatButton;
     private ImageButton shuffleButton;
     private View toggleListButton;
-    private ImageButton starButton;
-    private ImageButton bookmarkButton;
-    private ImageButton rateBadButton;
-    private ImageButton rateGoodButton;
-    private ImageButton playbackSpeedButton;
 
     private ScheduledExecutorService executorService;
     private DownloadFile currentPlaying;
@@ -194,10 +189,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         startButton = rootView.findViewById(R.id.download_start);
         repeatButton = (ImageButton) rootView.findViewById(R.id.download_repeat);
         shuffleButton = (ImageButton) rootView.findViewById(R.id.download_shuffle);
-        bookmarkButton = (ImageButton) rootView.findViewById(R.id.download_bookmark);
-        rateBadButton = (ImageButton) rootView.findViewById(R.id.download_rating_bad);
-        rateGoodButton = (ImageButton) rootView.findViewById(R.id.download_rating_good);
-        playbackSpeedButton = (ImageButton) rootView.findViewById(R.id.download_playback_speed);
         toggleListButton = rootView.findViewById(R.id.download_toggle_list);
         downloadPositionIndex = (TextView) rootView.findViewById(R.id.download_position_index);
 
@@ -208,28 +199,12 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         ItemTouchHelper touchHelper = new ItemTouchHelper(new DownloadFileItemHelperCallback(this, true));
         touchHelper.attachToRecyclerView(playlistView);
 
-        starButton = (ImageButton) rootView.findViewById(R.id.download_star);
-        if (Util.getPreferences(context).getBoolean(Constants.PREFERENCES_KEY_MENU_STAR, true)) {
-            starButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getDownloadService().toggleStarred();
-                    setControlsVisible(true);
-                }
-            });
-        } else {
-            starButton.setVisibility(View.GONE);
-        }
-
         View.OnTouchListener touchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent me) {
                 return gestureScanner.onTouchEvent(me);
             }
         };
-        for (ImageButton imageButton : Arrays.asList(rateGoodButton, playbackSpeedButton, startButton, bookmarkButton, rateBadButton)) {
-            imageButton.setOnTouchListener(touchListener);
-        }
         emptyTextView.setOnTouchListener(touchListener);
         albumArtImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -341,60 +316,12 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         });
 
 
-        bookmarkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createBookmark();
-                setControlsVisible(true);
-            }
-        });
-
-        rateBadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DownloadService downloadService = getDownloadService();
-                if (downloadService == null) {
-                    return;
-                }
-                downloadService.toggleRating(1);
-                setControlsVisible(true);
-            }
-        });
-        rateGoodButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DownloadService downloadService = getDownloadService();
-                if (downloadService == null) {
-                    return;
-                }
-                downloadService.toggleRating(5);
-                setControlsVisible(true);
-            }
-        });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setPlaybackSpeed();
-        } else {
-            playbackSpeedButton.setVisibility(View.GONE);
-        }
 
         toggleListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleFullscreenAlbumArt();
                 setControlsVisible(true);
-            }
-        });
-
-        View overlay = rootView.findViewById(R.id.download_overlay_buttons);
-        final int overlayHeight = overlay != null ? overlay.getHeight() : -1;
-        albumArtImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (overlayHeight == -1 || lastY < (view.getBottom() - overlayHeight)) {
-                    toggleFullscreenAlbumArt();
-                    setControlsVisible(true);
-                }
             }
         });
 
@@ -468,12 +395,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
             }
         } else {
             menu.removeItem(R.id.menu_equalizer);
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || isRemoteEnabled) {
-            playbackSpeedButton.setVisibility(View.GONE);
-        } else {
-            playbackSpeedButton.setVisibility(View.VISIBLE);
         }
 
         if (downloadService != null) {
@@ -738,8 +659,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
             context.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        updateButtons();
-
         if (currentPlaying == null && downloadService != null && currentPlaying == downloadService.getCurrentPlaying()) {
             getImageLoader().loadImage(albumArtImageView, (Entry) null, true, false);
         }
@@ -836,33 +755,13 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 
         try {
             long duration = 1700L;
-            FadeOutAnimation.createAndStart(rootView.findViewById(R.id.download_overlay_buttons), !visible, duration);
+            //FadeOutAnimation.createAndStart(rootView.findViewById(R.id.download_overlay_buttons), !visible, duration);
 
             if (visible) {
                 scheduleHideControls();
             }
         } catch (Exception e) {
 
-        }
-    }
-
-    private void updateButtons() {
-        if (context == null) {
-            return;
-        }
-
-        if (Util.isOffline(context)) {
-            bookmarkButton.setVisibility(View.GONE);
-            rateBadButton.setVisibility(View.GONE);
-            rateGoodButton.setVisibility(View.GONE);
-        } else {
-            if (ServerInfo.canBookmark(context)) {
-                bookmarkButton.setVisibility(View.VISIBLE);
-            } else {
-                bookmarkButton.setVisibility(View.GONE);
-            }
-            rateBadButton.setVisibility(View.VISIBLE);
-            rateGoodButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -1022,98 +921,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         }.execute();
     }
 
-    private void createBookmark() {
-        DownloadService downloadService = getDownloadService();
-        if (downloadService == null) {
-            return;
-        }
-
-        final DownloadFile currentDownload = downloadService.getCurrentPlaying();
-        if (currentDownload == null) {
-            return;
-        }
-
-        View dialogView = context.getLayoutInflater().inflate(R.layout.create_bookmark, null);
-        final EditText commentBox = (EditText) dialogView.findViewById(R.id.comment_text);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.download_save_bookmark_title)
-                .setView(dialogView)
-                .setPositiveButton(R.string.common_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        String comment = commentBox.getText().toString();
-
-                        createBookmark(currentDownload, comment);
-                    }
-                })
-                .setNegativeButton(R.string.common_cancel, null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void createBookmark(final DownloadFile currentDownload, final String comment) {
-        DownloadService downloadService = getDownloadService();
-        if (downloadService == null) {
-            return;
-        }
-
-        final Entry currentSong = currentDownload.getSong();
-        final int position = downloadService.getPlayerPosition();
-        final Bookmark oldBookmark = currentSong.getBookmark();
-        currentSong.setBookmark(new Bookmark(position));
-        bookmarkButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_menu_bookmark_selected));
-
-        new SilentBackgroundTask<Void>(context) {
-            @Override
-            protected Void doInBackground() throws Throwable {
-                MusicService musicService = MusicServiceFactory.getMusicService(context);
-                musicService.createBookmark(currentSong, position, comment, context, null);
-
-                new UpdateHelper.EntryInstanceUpdater(currentSong) {
-                    @Override
-                    public void update(Entry found) {
-                        found.setBookmark(new Bookmark(position));
-                    }
-                }.execute();
-
-                return null;
-            }
-
-            @Override
-            protected void done(Void result) {
-                Util.toast(context, R.string.download_save_bookmark);
-                setControlsVisible(true);
-            }
-
-            @Override
-            protected void error(Throwable error) {
-                Log.w(TAG, "Failed to create bookmark", error);
-                currentSong.setBookmark(oldBookmark);
-
-                // If no bookmark at start, then return to no bookmark
-                if (oldBookmark == null) {
-                    int bookmark;
-                    if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        bookmark = R.drawable.ic_menu_bookmark_dark;
-                    } else {
-                        bookmark = DrawableTint.getDrawableRes(context, R.attr.bookmark);
-                    }
-                    bookmarkButton.setImageResource(bookmark);
-                }
-
-                String msg;
-                if (error instanceof OfflineException || error instanceof ServerTooOldException) {
-                    msg = getErrorMessage(error);
-                } else {
-                    msg = context.getResources().getString(R.string.download_save_bookmark_failed) + getErrorMessage(error);
-                }
-
-                Util.toast(context, msg, false);
-            }
-        }.execute();
-    }
-
     @Override
     public boolean onDown(MotionEvent me) {
         setControlsVisible(true);
@@ -1212,7 +1019,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 
         updateMediaButton(shouldFastForward);
         updateTitle();
-        setPlaybackSpeed();
     }
 
     private void updateMediaButton(boolean shouldFastForward) {
@@ -1289,13 +1095,11 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         }
 
         if (downloadService.isCurrentPlayingSingle()) {
-            //toggleListButton.setVisibility(View.GONE);
             repeatButton.setVisibility(View.GONE);
         } else {
-            //toggleListButton.setVisibility(View.VISIBLE);
             repeatButton.setVisibility(View.VISIBLE);
         }
-        setPlaybackSpeed();
+        //setPlaybackSpeed();
     }
 
     @Override
@@ -1384,50 +1188,6 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
 
     @Override
     public void onMetadataUpdate(Entry song, int fieldChange) {
-        if (song != null && song.isStarred()) {
-            starButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_toggle_star));
-        } else {
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                starButton.setImageResource(DrawableTint.getDrawableRes(context, R.attr.star_outline));
-            } else {
-                starButton.setImageResource(R.drawable.ic_toggle_star_outline_dark);
-            }
-        }
-
-        int badRating, goodRating, bookmark;
-        if (song != null && song.getRating() == 1) {
-            rateBadButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_bad_selected));
-        } else {
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                badRating = R.drawable.ic_action_rating_bad_dark;
-            } else {
-                badRating = DrawableTint.getDrawableRes(context, R.attr.rating_bad);
-            }
-            rateBadButton.setImageResource(badRating);
-        }
-
-        if (song != null && song.getRating() == 5) {
-            rateGoodButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_action_rating_good_selected));
-        } else {
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                goodRating = R.drawable.ic_action_rating_good_dark;
-            } else {
-                goodRating = DrawableTint.getDrawableRes(context, R.attr.rating_good);
-            }
-            rateGoodButton.setImageResource(goodRating);
-        }
-
-        if (song != null && song.getBookmark() != null) {
-            bookmarkButton.setImageDrawable(DrawableTint.getTintedDrawable(context, R.drawable.ic_menu_bookmark_selected));
-        } else {
-            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                bookmark = R.drawable.ic_menu_bookmark_dark;
-            } else {
-                bookmark = DrawableTint.getDrawableRes(context, R.attr.bookmark);
-            }
-            bookmarkButton.setImageResource(bookmark);
-        }
-
         if (song != null && albumArtImageView != null && fieldChange == DownloadService.METADATA_UPDATED_COVER_ART) {
             getImageLoader().loadImage(albumArtImageView, song, true, true);
         }
@@ -1493,61 +1253,4 @@ public class NowPlayingFragment extends SubsonicFragment implements OnGestureLis
         return entries;
     }
 
-    private void setPlaybackSpeed() {
-        if (playbackSpeedButton.getVisibility() == View.GONE)
-            return;
-        speed = new DroppySpeedControl(R.layout.set_playback_speed);
-        DroppyMenuPopup.Builder builder = new DroppyMenuPopup.Builder(context, playbackSpeedButton);
-        speed.setClickable(true);
-        float playbackSpeed;
-
-        playbackSpeed = getDownloadService() != null ? getDownloadService().getPlaybackSpeed() : 1.0f;
-
-        final DroppyMenuPopup popup = builder.triggerOnAnchorClick(true).addMenuItem(speed).setPopupAnimation(new DroppyFadeInAnimation()).build();
-        speed.setOnSeekBarChangeListener(context, new DroppyClickCallbackInterface() {
-            @Override
-            public void call(View v, int id) {
-                SeekBar playbackSpeedBar = (SeekBar) v;
-                int playbackSpeed = playbackSpeedBar.getProgress() + 5;
-                setPlaybackSpeed(playbackSpeed / 10f);
-            }
-        }, R.id.playback_speed_bar, R.id.playback_speed_label, playbackSpeed);
-        speed.setOnClicks(context,
-                new DroppyClickCallbackInterface() {
-                    @Override
-                    public void call(View v, int id) {
-                        float playbackSpeed = 1.0f;
-                        switch (id) {
-                            case R.id.playback_speed_one_half:
-                                playbackSpeed = 1.5f;
-                                break;
-                            case R.id.playback_speed_double:
-                                playbackSpeed = 2.0f;
-                                break;
-                            case R.id.playback_speed_triple:
-                                playbackSpeed = 3.0f;
-                                break;
-                            default:
-                                break;
-                        }
-                        setPlaybackSpeed(playbackSpeed);
-                        speed.updateSeekBar(playbackSpeed);
-                        popup.dismiss(true);
-                    }
-                }
-                , R.id.playback_speed_normal, R.id.playback_speed_one_half, R.id.playback_speed_double,
-                R.id.playback_speed_triple);
-        speed.updateSeekBar(playbackSpeed);
-
-    }
-
-    private void setPlaybackSpeed(float playbackSpeed) {
-        DownloadService downloadService = getDownloadService();
-        if (downloadService == null) {
-            return;
-        }
-
-        downloadService.setPlaybackSpeed(playbackSpeed);
-        updateTitle();
-    }
 }

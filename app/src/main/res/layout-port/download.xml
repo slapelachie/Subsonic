@@ -40,50 +40,10 @@
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop" />
 
-                        <LinearLayout
-                            android:id="@+id/download_overlay_buttons"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|bottom"
-                            android:background="@color/overlayColor"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="invisible">
-
-                            <ImageButton
-                                android:id="@+id/download_rating_good"
-                                style="@style/DownloadActionImageButton"
-                                android:src="@drawable/ic_action_rating_good_dark" />
-
-                            <ImageButton
-                                android:id="@+id/download_rating_bad"
-                                style="@style/DownloadActionImageButton"
-                                android:src="@drawable/ic_action_rating_bad_dark" />
-
-                            <ImageButton
-                                android:id="@+id/download_star"
-                                style="@style/DownloadActionImageButton"
-                                android:src="@drawable/ic_toggle_star_outline_dark" />
-
-                            <ImageButton
-                                android:id="@+id/download_playback_speed"
-                                style="@style/DownloadActionImageButton"
-                                android:src="@drawable/ic_action_playback_speed_dark" />
-
-                            <ImageButton
-                                android:id="@+id/download_bookmark"
-                                style="@style/DownloadActionImageButton"
-                                android:src="@drawable/ic_menu_bookmark_dark" />
-
-                            <ImageButton
-                                android:id="@+id/download_toggle_list"
-                                style="@style/DownloadActionImageButton"
-                                android:src="@drawable/action_toggle_list_dark" />
-                        </LinearLayout>
-
 
                     </FrameLayout>
                 </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -126,17 +86,53 @@
                     android:layout_height="0dp"
                     android:layout_weight="3" />
 
-                <TextView
-                    android:id="@+id/download_position_index"
-                    style="?attr/actionbarSubtitleStyle"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="1"
-                    android:singleLine="true"
-                    android:textColor="?android:textColorSecondary"
-                    android:textStyle="bold" />
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/download_toggle_list2"
+                        style="@style/PlaybackControl"
+                        android:layout_width="0dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
+                        android:src="?attr/media_button_temp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/download_position_index"
+                        style="?attr/actionbarSubtitleStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textColor="?android:textColorSecondary"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <ImageButton
+                        android:id="@+id/download_toggle_list"
+                        style="@style/PlaybackControl"
+                        android:layout_width="0dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/action_toggle_list_dark" />
+
+                </LinearLayout>
 
 
             </LinearLayout>

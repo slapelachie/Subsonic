@@ -13,8 +13,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_gravity="start|center_vertical"
         android:src="?attr/media_button_repeat_off" />
 
 
@@ -24,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="40dp"
-        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:src="?attr/media_button_backward" />
 
 
@@ -34,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="40dp"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:src="?attr/media_button_start" />
 
     <ImageButton
@@ -43,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="40dp"
-        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:src="?attr/media_button_forward" />
 
 
@@ -53,7 +52,6 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_gravity="end|center_vertical"
         android:src="?attr/shuffle_button" />
 </LinearLayout>

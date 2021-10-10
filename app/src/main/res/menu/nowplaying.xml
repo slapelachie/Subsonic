@@ -3,12 +3,6 @@
 	  xmlns:compat="http://schemas.android.com/apk/res-auto"
 	  android:checkableBehavior="all">
 
-    <item
-        android:id="@+id/menu_shuffle"
-        android:icon="?attr/shuffle"
-        android:title="@string/download.menu_shuffle"
-        compat:showAsAction="ifRoom|withText"/>
-
 	<item
 		android:id="@+id/menu_mediaroute"
 		compat:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
@@ -20,13 +14,13 @@
         android:id="@+id/menu_remove_all"
         android:icon="?attr/remove"
         android:title="@string/download.menu_remove_all"
-        compat:showAsAction="ifRoom|withText"/>
+        />
 
     <item
         android:id="@+id/menu_save_playlist"
         android:icon="?attr/save"
         android:title="@string/download.menu_save"
-        compat:showAsAction="ifRoom|withText"/>
+        />
 
 	<item
 		android:id="@+id/menu_equalizer"
