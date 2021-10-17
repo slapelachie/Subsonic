@@ -57,7 +57,6 @@
 
 	<xyz.slapelachie.supersonic.view.RecyclingImageView
 		android:id="@+id/chat_avatar"
-		android:src="@drawable/ic_social_person"
 		android:layout_width="@dimen/AlbumArt.Small"
 		android:layout_height="@dimen/AlbumArt.Small"
 		android:layout_gravity="right|center_vertical"/>

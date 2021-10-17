@@ -92,4 +92,11 @@
 		<item name="android:paddingRight">16dip</item>
 		<item name="android:paddingLeft">16dip</item>
 	</style>
+
+
+
+	<style name="NavigationView">
+		<item name="textAppearanceListItemSecondary">@color/takoAccent</item>
+	</style>
+
 </resources>

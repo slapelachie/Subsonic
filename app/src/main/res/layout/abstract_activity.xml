@@ -18,5 +18,7 @@
 		android:id="@+id/left_drawer"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
+		app:itemIconTint="@color/draw_item"
+		app:itemTextColor="@color/draw_item"
 		android:layout_gravity="start"/>
 </androidx.drawerlayout.widget.DrawerLayout>

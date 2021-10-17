@@ -27,6 +27,7 @@
         <item>dark</item>
 		<item>black</item>
 		<item>holo</item>
+		<item>tako</item>
 		<item>day/night</item>
 		<item>day/black</item>
     </string-array>
@@ -36,6 +37,7 @@
         <item>@string/settings.theme_dark</item>
 		<item>@string/settings.theme_black</item>
 		<item>@string/settings.theme_holo</item>
+		<item>@string/settings.theme_tako</item>
 		<item>@string/settings.theme_day_night</item>
 		<item>@string/settings.theme_day_black_night</item>
     </string-array>

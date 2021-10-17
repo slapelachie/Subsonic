@@ -15,4 +15,8 @@
 	<color name="holoPrimary">#009688</color>
 	<color name="holoPrimaryDark">#00897b</color>
 	<color name="holoAccent">#64ffda</color>
+
+	<color name="takoPrimary">#575068</color>
+	<color name="takoPrimaryDark">#3b3747</color>
+	<color name="takoAccent">#f29a30</color>
 </resources>

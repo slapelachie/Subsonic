@@ -20,6 +20,7 @@ package xyz.slapelachie.supersonic.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -35,9 +36,14 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import androidx.collection.LruCache;
+import androidx.core.content.ContextCompat;
+
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.lang.reflect.Type;
 
 import xyz.slapelachie.supersonic.R;
 import xyz.slapelachie.supersonic.domain.ArtistInfo;
@@ -310,7 +316,7 @@ public class ImageLoader {
 
 	public SilentBackgroundTask<Void> loadAvatar(Context context, ImageView view, String username) {
 		if(username == null) {
-			view.setImageResource(R.drawable.ic_social_person);
+			//view.setImageResource(R.drawable.ic_social_person);
 			return null;
 		}
 
